@@ -129,41 +129,87 @@ export default function WaiterDashboardPage() {
 
   return (
     <main className={dark ? 'app dark' : 'app'}>
-      <header className="topbar">
-        <div className="brand" onClick={() => router.push('/')} style={{ cursor: 'pointer' }}>
+      <header className="topbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+        <div className="brand" onClick={() => router.push('/')} style={{ cursor: 'pointer', flexShrink: 0 }}>
           <span className="brand-mark">✦</span>
-          <span>THALI<span className="accent">HOUSE</span></span>
+          <span className="brand-text" style={{ display: 'inline' }}>THALI<span className="accent">HOUSE</span></span>
+          <span className="brand-short" style={{ display: 'none' }}>TH</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <span style={{ font: '600 13px var(--font-body)', color: 'var(--muted)' }}>👨‍🍳 Waiter Mode</span>
-          <button className="theme-button" aria-label="Toggle theme" onClick={() => setDark(!dark)}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 16px)', flexGrow: 1, justifyContent: 'flex-end' }}>
+          <button className="theme-button" aria-label="Toggle theme" onClick={() => setDark(!dark)} style={{ fontSize: '16px' }}>
             {dark ? '☀' : '☾'}
           </button>
-          <button className="auth-link" onClick={() => router.push('/waiter-tables')}>📋 Tables</button>
-          <button className="auth-link" onClick={() => router.push('/')}>Home</button>
-          <button className="auth-signup" onClick={handleLogout}>Log Out</button>
+          <button
+            className="icon-button"
+            onClick={() => router.push('/waiter-tables')}
+            title="Tables"
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '18px',
+              color: 'var(--text)',
+              padding: '8px',
+              borderRadius: '6px',
+              transition: 'background 0.2s'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+          >
+            📋<span className="mobile-show-text"> Tables</span>
+          </button>
+          <button
+            className="icon-button"
+            onClick={() => router.push('/')}
+            title="Home"
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '18px',
+              color: 'var(--text)',
+              padding: '8px',
+              borderRadius: '6px',
+              transition: 'background 0.2s'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+          >
+            🏠<span className="mobile-show-text"> Home</span>
+          </button>
+          <button
+            className="auth-signup"
+            onClick={handleLogout}
+            style={{
+              padding: 'clamp(8px, 2vw, 10px) clamp(12px, 3vw, 18px)',
+              fontSize: 'clamp(11px, 2vw, 13px)',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Log Out
+          </button>
         </div>
       </header>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(20px, 5vw, 40px) clamp(16px, 5vw, 24px)' }}>
         {/* Waiter Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '40px', background: 'var(--card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border)' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--primary)', color: 'var(--on-primary)', display: 'grid', placeItems: 'center', font: '600 32px var(--font-head)', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'clamp(12px, 4vw, 20px)', marginBottom: 'clamp(20px, 6vw, 40px)', background: 'var(--card)', padding: 'clamp(16px, 4vw, 24px)', borderRadius: '16px', border: '1px solid var(--border)', flexWrap: 'wrap' }}>
+          <div style={{ width: 'clamp(60px, 15vw, 80px)', height: 'clamp(60px, 15vw, 80px)', borderRadius: '50%', background: 'var(--primary)', color: 'var(--on-primary)', display: 'grid', placeItems: 'center', font: 'clamp(600, 3vw, 600) clamp(20px, 8vw, 32px) var(--font-head)', flexShrink: 0 }}>
             {user.name[0]?.toUpperCase()}
           </div>
-          <div>
-            <h1 style={{ font: '600 28px var(--font-head)', margin: '0 0 8px', color: 'var(--text)' }}>Welcome, {user.name}!</h1>
-            <p style={{ color: 'var(--muted)', margin: '0', fontSize: '14px' }}>{user.restaurantName} • {user.restaurantCity}</p>
-            <p style={{ color: 'var(--muted)', margin: '8px 0 0', fontSize: '13px' }}>{user.experience} years experience • Joined {user.joinedDate}</p>
+          <div style={{ flex: 1 }}>
+            <h1 style={{ font: 'clamp(600, 4vw, 600) clamp(20px, 6vw, 28px) var(--font-head)', margin: '0 0 8px', color: 'var(--text)' }}>Welcome, {user.name}!</h1>
+            <p style={{ color: 'var(--muted)', margin: '0', fontSize: 'clamp(12px, 3vw, 14px)' }}>{user.restaurantName} • {user.restaurantCity}</p>
+            <p style={{ color: 'var(--muted)', margin: '8px 0 0', fontSize: 'clamp(11px, 2.5vw, 13px)' }}>{user.experience} years experience • Joined {user.joinedDate}</p>
           </div>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: '12px' }}>
-            <div style={{ background: 'var(--surface)', padding: '12px 16px', borderRadius: '10px' }}>
-              <p style={{ color: 'var(--muted)', font: '11px var(--font-body)', margin: '0 0 4px', letterSpacing: '0.5px' }}>STATUS</p>
-              <p style={{ font: '600 14px var(--font-body)', margin: '0', color: 'var(--green)' }}>🟢 {user.status}</p>
+          <div style={{ display: 'flex', gap: '12px', marginLeft: 'auto', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <div style={{ background: 'var(--surface)', padding: 'clamp(8px, 2vw, 12px) clamp(10px, 3vw, 16px)', borderRadius: '10px', minWidth: 'fit-content' }}>
+              <p style={{ color: 'var(--muted)', font: 'clamp(9px, 2vw, 11px) var(--font-body)', margin: '0 0 4px', letterSpacing: '0.5px' }}>STATUS</p>
+              <p style={{ font: '600 clamp(12px, 3vw, 14px) var(--font-body)', margin: '0', color: 'var(--green)' }}>🟢 {user.status}</p>
             </div>
-            <div style={{ background: 'var(--surface)', padding: '12px 16px', borderRadius: '10px' }}>
-              <p style={{ color: 'var(--muted)', font: '11px var(--font-body)', margin: '0 0 4px', letterSpacing: '0.5px' }}>RATING</p>
-              <p style={{ font: '600 14px var(--font-body)', margin: '0', color: 'var(--primary)' }}>⭐ {user.rating}</p>
+            <div style={{ background: 'var(--surface)', padding: 'clamp(8px, 2vw, 12px) clamp(10px, 3vw, 16px)', borderRadius: '10px', minWidth: 'fit-content' }}>
+              <p style={{ color: 'var(--muted)', font: 'clamp(9px, 2vw, 11px) var(--font-body)', margin: '0 0 4px', letterSpacing: '0.5px' }}>RATING</p>
+              <p style={{ font: '600 clamp(12px, 3vw, 14px) var(--font-body)', margin: '0', color: 'var(--primary)' }}>⭐ {user.rating}</p>
             </div>
           </div>
         </div>
@@ -172,34 +218,34 @@ export default function WaiterDashboardPage() {
         </div>
 
         {/* Stats Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '40px' }}>
-          <div style={{ background: activeOrdersCount > 0 ? 'linear-gradient(135deg, rgba(255,107,107,0.1), rgba(255,107,107,0.05))' : 'var(--card)', border: activeOrdersCount > 0 ? '1px solid rgba(255,107,107,0.3)' : '1px solid var(--border)', borderRadius: '14px', padding: '20px' }}>
-            <p style={{ color: 'var(--muted)', font: '600 12px var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>ACTIVE ORDERS</p>
-            <p style={{ font: '600 36px var(--font-head)', margin: '0', color: activeOrdersCount > 0 ? '#ff6b6b' : 'var(--primary)' }}>{activeOrdersCount}</p>
-            <p style={{ color: 'var(--muted)', font: '600 12px var(--font-body)', margin: '8px 0 0' }}>{activeOrdersCount > 0 ? 'Waiting to deliver' : 'No active orders'}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(140px, 40vw, 220px), 1fr))', gap: 'clamp(12px, 3vw, 16px)', marginBottom: 'clamp(24px, 6vw, 40px)' }}>
+          <div style={{ background: activeOrdersCount > 0 ? 'linear-gradient(135deg, rgba(255,107,107,0.1), rgba(255,107,107,0.05))' : 'var(--card)', border: activeOrdersCount > 0 ? '1px solid rgba(255,107,107,0.3)' : '1px solid var(--border)', borderRadius: '14px', padding: 'clamp(14px, 3vw, 20px)' }}>
+            <p style={{ color: 'var(--muted)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>ACTIVE ORDERS</p>
+            <p style={{ font: '600 clamp(28px, 6vw, 36px) var(--font-head)', margin: '0', color: activeOrdersCount > 0 ? '#ff6b6b' : 'var(--primary)' }}>{activeOrdersCount}</p>
+            <p style={{ color: 'var(--muted)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '8px 0 0' }}>{activeOrdersCount > 0 ? 'Waiting to deliver' : 'No active orders'}</p>
           </div>
 
-          <div style={{ background: todayEarnings > 0 ? 'linear-gradient(135deg, rgba(31,138,91,0.1), rgba(31,138,91,0.05))' : 'var(--card)', border: todayEarnings > 0 ? '1px solid rgba(31,138,91,0.3)' : '1px solid var(--border)', borderRadius: '14px', padding: '20px' }}>
-            <p style={{ color: 'var(--muted)', font: '600 12px var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>TODAY'S EARNINGS</p>
-            <p style={{ font: '600 32px var(--font-head)', margin: '0', color: 'var(--green)' }}>₹{todayEarnings}</p>
-            <p style={{ color: 'var(--green)', font: '600 12px var(--font-body)', margin: '8px 0 0' }}>{deliveredOrders.length} orders completed</p>
+          <div style={{ background: todayEarnings > 0 ? 'linear-gradient(135deg, rgba(31,138,91,0.1), rgba(31,138,91,0.05))' : 'var(--card)', border: todayEarnings > 0 ? '1px solid rgba(31,138,91,0.3)' : '1px solid var(--border)', borderRadius: '14px', padding: 'clamp(14px, 3vw, 20px)' }}>
+            <p style={{ color: 'var(--muted)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>TODAY'S EARNINGS</p>
+            <p style={{ font: '600 clamp(24px, 5vw, 32px) var(--font-head)', margin: '0', color: 'var(--green)' }}>₹{todayEarnings}</p>
+            <p style={{ color: 'var(--green)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '8px 0 0' }}>{deliveredOrders.length} orders completed</p>
           </div>
 
-          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '14px', padding: '20px' }}>
-            <p style={{ color: 'var(--muted)', font: '600 12px var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>TOTAL DELIVERED</p>
-            <p style={{ font: '600 36px var(--font-head)', margin: '0', color: 'var(--text)' }}>{user.totalOrders + deliveredOrders.length}</p>
-            <p style={{ color: 'var(--muted)', font: '600 12px var(--font-body)', margin: '8px 0 0' }}>Lifetime deliveries</p>
+          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '14px', padding: 'clamp(14px, 3vw, 20px)' }}>
+            <p style={{ color: 'var(--muted)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>TOTAL DELIVERED</p>
+            <p style={{ font: '600 clamp(28px, 6vw, 36px) var(--font-head)', margin: '0', color: 'var(--text)' }}>{user.totalOrders + deliveredOrders.length}</p>
+            <p style={{ color: 'var(--muted)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '8px 0 0' }}>Lifetime deliveries</p>
           </div>
 
-          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '14px', padding: '20px' }}>
-            <p style={{ color: 'var(--muted)', font: '600 12px var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>NEXT PAYOUT</p>
-            <p style={{ font: '600 32px var(--font-head)', margin: '0', color: 'var(--text)' }}>₹{totalEarnings}</p>
-            <p style={{ color: 'var(--green)', font: '600 12px var(--font-body)', margin: '8px 0 0' }}>Due in 5 days</p>
+          <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '14px', padding: 'clamp(14px, 3vw, 20px)' }}>
+            <p style={{ color: 'var(--muted)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '0 0 8px', letterSpacing: '1px' }}>NEXT PAYOUT</p>
+            <p style={{ font: '600 clamp(24px, 5vw, 32px) var(--font-head)', margin: '0', color: 'var(--text)' }}>₹{totalEarnings}</p>
+            <p style={{ color: 'var(--green)', font: 'clamp(10px, 2vw, 12px) 600 var(--font-body)', margin: '8px 0 0' }}>Due in 5 days</p>
           </div>
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', borderBottom: '1px solid var(--border)', paddingBottom: '16px', overflowX: 'auto' }}>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: 'clamp(16px, 4vw, 24px)', borderBottom: '1px solid var(--border)', paddingBottom: 'clamp(12px, 3vw, 16px)', overflowX: 'auto' }}>
           {['overview', 'orders', 'earnings', 'settings'].map(tab => (
             <button
               key={tab}
@@ -208,11 +254,12 @@ export default function WaiterDashboardPage() {
                 background: 'none',
                 border: 'none',
                 color: activeTab === tab ? 'var(--primary)' : 'var(--muted)',
-                font: '600 14px var(--font-body)',
+                font: `600 clamp(12px, 2.5vw, 14px) var(--font-body)`,
                 cursor: 'pointer',
                 paddingBottom: '8px',
                 borderBottom: activeTab === tab ? '3px solid var(--primary)' : 'none',
                 textTransform: 'capitalize',
+                whiteSpace: 'nowrap',
               }}
             >
               {tab}
@@ -223,34 +270,34 @@ export default function WaiterDashboardPage() {
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div>
-            <h2 style={{ font: '600 24px var(--font-head)', margin: '0 0 20px', color: 'var(--text)' }}>Pending Orders</h2>
+            <h2 style={{ font: 'clamp(600, 4vw, 600) clamp(18px, 5vw, 24px) var(--font-head)', margin: '0 0 clamp(12px, 3vw, 20px)', color: 'var(--text)' }}>Pending Orders</h2>
             {orders.length > 0 ? (
-              <div style={{ display: 'grid', gap: '12px' }}>
+              <div style={{ display: 'grid', gap: 'clamp(10px, 2vw, 12px)' }}>
                 {orders.slice(0, 5).map(order => (
-                  <div key={order.id} style={{ background: 'var(--card)', border: '2px solid ' + (order.priority === 'urgent' ? '#ff6b6b' : 'var(--border)'), borderRadius: '14px', padding: '20px', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)'} onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.boxShadow = 'none'}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '12px' }}>
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                          <p style={{ font: '600 16px var(--font-body)', margin: '0', color: 'var(--text)' }}>{order.customerName}</p>
-                          <span style={{ background: order.orderType === 'online' ? '#e6f2ff' : 'var(--tint)', color: order.orderType === 'online' ? '#2371b8' : 'var(--primary)', padding: '2px 8px', borderRadius: '6px', font: '700 10px var(--font-body)' }}>{order.orderType.toUpperCase()}</span>
-                          {order.priority === 'urgent' && <span style={{ background: '#ff6b6b', color: 'white', padding: '2px 8px', borderRadius: '6px', font: '600 11px var(--font-body)' }}>URGENT</span>}
+                  <div key={order.id} style={{ background: 'var(--card)', border: '2px solid ' + (order.priority === 'urgent' ? '#ff6b6b' : 'var(--border)'), borderRadius: '14px', padding: 'clamp(14px, 3vw, 20px)', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)'} onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.boxShadow = 'none'}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+                      <div style={{ flex: 1, minWidth: '200px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                          <p style={{ font: 'clamp(600, 3vw, 600) clamp(14px, 3vw, 16px) var(--font-body)', margin: '0', color: 'var(--text)' }}>{order.customerName}</p>
+                          <span style={{ background: order.orderType === 'online' ? '#e6f2ff' : 'rgba(202, 122, 16, 0.1)', color: order.orderType === 'online' ? '#2371b8' : '#ca7a10', padding: '2px 8px', borderRadius: '6px', font: 'clamp(700, 2vw, 700) clamp(9px, 2vw, 10px) var(--font-body)' }}>{order.orderType.toUpperCase()}</span>
+                          {order.priority === 'urgent' && <span style={{ background: '#ff6b6b', color: 'white', padding: '2px 8px', borderRadius: '6px', font: 'clamp(600, 2vw, 600) clamp(9px, 2vw, 11px) var(--font-body)' }}>URGENT</span>}
                         </div>
-                        <p style={{ color: 'var(--muted)', font: '13px var(--font-body)', margin: '0' }}>📍 {order.deliveryAddress}</p>
+                        <p style={{ color: 'var(--muted)', font: 'clamp(12px, 2.5vw, 13px) var(--font-body)', margin: '0' }}>📍 {order.deliveryAddress}</p>
                       </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ color: statusColors[order.status], fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}>{statusIcons[order.status]} {statusLabels[order.status]}</div>
-                        <p style={{ font: '600 20px var(--font-body)', margin: '0', color: 'var(--text)' }}>₹{order.total}</p>
+                      <div style={{ textAlign: 'right', minWidth: '80px' }}>
+                        <div style={{ color: statusColors[order.status], fontWeight: '600', fontSize: 'clamp(11px, 2.5vw, 12px)', marginBottom: '4px' }}>{statusIcons[order.status]} {statusLabels[order.status]}</div>
+                        <p style={{ font: '600 clamp(16px, 4vw, 20px) var(--font-body)', margin: '0', color: 'var(--text)' }}>₹{order.total}</p>
                       </div>
                     </div>
-                    <div style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '12px', background: 'var(--bg)', padding: '8px 12px', borderRadius: '8px' }}>
+                    <div style={{ fontSize: 'clamp(12px, 2.5vw, 13px)', color: 'var(--muted)', marginBottom: '12px', background: 'var(--bg)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 12px)', borderRadius: '8px' }}>
                       {order.items.map((item, i) => (
-                        <p key={i} style={{ margin: '4px 0' }}>• {item}</p>
+                        <p key={i} style={{ margin: '4px 0', fontSize: 'clamp(11px, 2.5vw, 13px)' }}>• {item}</p>
                       ))}
                     </div>
-                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'space-between', paddingTop: '12px', borderTop: '1px solid var(--border)' }}>
-                      <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
-                        <p style={{ margin: '0' }}>Ordered at: <strong>{order.time}</strong></p>
-                        <p style={{ margin: '4px 0 0' }}>Est. delivery: <strong>{order.estimatedDelivery}</strong></p>
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'space-between', paddingTop: '12px', borderTop: '1px solid var(--border)', flexWrap: 'wrap' }}>
+                      <div style={{ fontSize: 'clamp(11px, 2.5vw, 12px)', color: 'var(--muted)' }}>
+                        <p style={{ margin: '0', fontSize: 'clamp(11px, 2.5vw, 12px)' }}>Ordered at: <strong>{order.time}</strong></p>
+                        <p style={{ margin: '4px 0 0', fontSize: 'clamp(11px, 2.5vw, 12px)' }}>Est. delivery: <strong>{order.estimatedDelivery}</strong></p>
                       </div>
                       <div style={{ display: 'flex', gap: '8px' }}>
                         {order.status === 'pending' && (

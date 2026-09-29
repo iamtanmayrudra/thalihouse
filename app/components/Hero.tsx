@@ -12,6 +12,11 @@ export default function Hero() {
           <em>Your rules.</em>
         </h1>
         <p className="hero-copy">Pick your favourites and build a meal exactly the way you like it — fresh, fast and made to order.</p>
+        <div className="hero-business-strip" aria-label="Thali House business highlights">
+          <span><i>●</i> Accepting orders now</span>
+          <span>📍 3 kitchens near you</span>
+          <span>🛵 Delivery &amp; pickup</span>
+        </div>
         <div className="hero-cta">
           <button className="primary" onClick={() => document.getElementById('builder')?.scrollIntoView({ behavior: 'smooth' })}>
             BUILD MY THALI <span>→</span>
@@ -42,6 +47,10 @@ export default function Hero() {
         <span className="chip chip-one">🌶 Spice your way</span>
         <span className="chip chip-two">⚡ Ready in 30 min</span>
         <span className="chip chip-three">🌿 100% veg</span>
+        <div className="hero-order-card">
+          <span className="order-card-icon">📦</span>
+          <span><b>1,200+ orders served</b><small>Fresh meals this month</small></span>
+        </div>
       </div>
     </section>
   );

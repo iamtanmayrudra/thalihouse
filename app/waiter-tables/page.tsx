@@ -157,18 +157,46 @@ export default function WaiterTablesPage() {
 
   return (
     <main className={dark ? 'app dark' : 'app'}>
-      <header className="topbar" style={{ padding: 'clamp(12px, 3vw, 16px) clamp(12px, 4vw, 24px)' }}>
-        <div className="brand" onClick={() => router.push('/')} style={{ cursor: 'pointer', fontSize: 'clamp(12px, 3vw, 16px)' }}>
+      <header className="topbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', padding: 'clamp(10px, 3vw, 16px) clamp(12px, 4vw, 24px)' }}>
+        <div className="brand" onClick={() => router.push('/')} style={{ cursor: 'pointer', flexShrink: 0 }}>
           <span className="brand-mark">✦</span>
-          <span>THALI<span className="accent">HOUSE</span></span>
+          <span className="brand-text" style={{ display: 'inline' }}>THALI<span className="accent">HOUSE</span></span>
+          <span className="brand-short" style={{ display: 'none' }}>TH</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 16px)', flexWrap: 'wrap' }}>
-          <span style={{ font: 'clamp(11px, 2.5vw, 13px) 600 var(--font-body)', color: 'var(--muted)' }}>📋 Table Orders</span>
-          <button className="theme-button" aria-label="Toggle theme" onClick={() => setDark(!dark)}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 16px)', flexGrow: 1, justifyContent: 'flex-end', flexWrap: 'nowrap' }}>
+          <button className="theme-button" aria-label="Toggle theme" onClick={() => setDark(!dark)} style={{ fontSize: '16px' }}>
             {dark ? '☀' : '☾'}
           </button>
-          <button className="auth-link" onClick={() => router.push('/waiter-dashboard')} style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px)' }}>Dashboard</button>
-          <button className="auth-signup" onClick={() => { try { localStorage.setItem('thali', JSON.stringify({ user: null })); } catch {} router.push('/'); }} style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px)' }}>Log Out</button>
+          <button
+            className="icon-button"
+            onClick={() => router.push('/waiter-dashboard')}
+            title="Dashboard"
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '18px',
+              color: 'var(--text)',
+              padding: '8px',
+              borderRadius: '6px',
+              transition: 'background 0.2s'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+          >
+            📊<span className="mobile-show-text"> Dashboard</span>
+          </button>
+          <button
+            className="auth-signup"
+            onClick={() => { try { localStorage.setItem('thali', JSON.stringify({ user: null })); } catch {} router.push('/'); }}
+            style={{
+              padding: 'clamp(8px, 2vw, 10px) clamp(12px, 3vw, 18px)',
+              fontSize: 'clamp(11px, 2vw, 13px)',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Log Out
+          </button>
         </div>
       </header>
 
@@ -253,7 +281,7 @@ export default function WaiterTablesPage() {
               </div>
             )}
 
-            {tables[selectedTable]?.status === 'occupied' && (
+            {tables[selectedTable]?.status === 'occupied' && tables[selectedTable]?.items.length > 0 && (
               <div style={{ background: 'var(--bg)', padding: 'clamp(12px, 3vw, 16px)', borderRadius: 'clamp(10px, 2vw, 12px)', marginBottom: 'clamp(12px, 3vw, 16px)' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(12px, 3vw, 16px)', marginBottom: 'clamp(12px, 3vw, 16px)' }}>
                   <div>
@@ -314,20 +342,20 @@ export default function WaiterTablesPage() {
         )}
 
         {showMenuModal && (
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 1000, padding: 'clamp(12px, 4vw, 24px)' }}>
-            <div style={{ background: 'var(--bg)', borderRadius: 'clamp(12px, 3vw, 16px)', width: '100%', maxWidth: '600px', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ background: 'var(--card)', padding: 'clamp(16px, 4vw, 24px)', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div><h3 style={{ font: 'clamp(16px, 4vw, 18px) 600 var(--font-head)', margin: '0', color: 'var(--text)' }}>Add Items to Table {selectedTable}</h3><p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: '12px' }}>Order type: <b>Offline · Dine-in</b></p></div>
+          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'grid', placeItems: 'center', zIndex: 1000, padding: 'clamp(8px, 3vw, 20px)' }}>
+            <div style={{ background: 'var(--bg)', borderRadius: 'clamp(12px, 3vw, 16px)', width: '100%', maxWidth: 'clamp(320px, 95vw, 600px)', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ background: 'var(--card)', padding: 'clamp(12px, 3vw, 20px)', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'clamp(8px, 2vw, 12px)' }}>
+                <div style={{ flex: 1, minWidth: 0 }}><h3 style={{ font: 'clamp(14px, 4vw, 18px) 600 var(--font-head)', margin: '0', color: 'var(--text)' }}>Add Items to Table {selectedTable}</h3><p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 'clamp(11px, 2.5vw, 12px)' }}>Order type: <b>Offline · Dine-in</b></p></div>
                 <button
                   onClick={() => setShowMenuModal(false)}
-                  style={{ background: 'none', border: 'none', font: 'clamp(20px, 5vw, 24px)', cursor: 'pointer', color: 'var(--text)', padding: '0' }}
+                  style={{ background: 'none', border: 'none', font: 'clamp(18px, 5vw, 24px)', cursor: 'pointer', color: 'var(--text)', padding: '0', flexShrink: 0, marginTop: '-2px' }}
                 >
                   ✕
                 </button>
               </div>
 
-              <div style={{ flex: 1, overflowY: 'auto', padding: 'clamp(16px, 4vw, 20px)' }}>
-                <div style={{ display: 'flex', gap: 'clamp(6px, 2vw, 8px)', marginBottom: 'clamp(16px, 4vw, 20px)', overflowX: 'auto', paddingBottom: 'clamp(6px, 1.5vw, 8px)' }}>
+              <div style={{ flex: 1, overflowY: 'auto', padding: 'clamp(12px, 3vw, 18px)' }}>
+                <div style={{ display: 'flex', gap: 'clamp(6px, 2vw, 8px)', marginBottom: 'clamp(12px, 3vw, 16px)', overflowX: 'auto', paddingBottom: 'clamp(6px, 1.5vw, 8px)' }}>
                   {categories.map(cat => (
                     <button
                       key={cat}
@@ -352,9 +380,9 @@ export default function WaiterTablesPage() {
                   {filteredItems.map(item => {
                     const cartItem = cartItems.find(c => c.id === item.id);
                     return (
-                      <div key={item.id} style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'clamp(10px, 2vw, 12px)', padding: 'clamp(12px, 3vw, 14px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'clamp(8px, 2vw, 12px)' }}>
-                        <div style={{ minWidth: 0 }}>
-                          <p style={{ font: 'clamp(12px, 3vw, 14px) 600 var(--font-body)', margin: '0 0 clamp(4px, 1vw, 4px)', color: 'var(--text)' }}>{item.emoji} {item.name}</p>
+                      <div key={item.id} style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'clamp(8px, 2vw, 12px)', padding: 'clamp(10px, 2.5vw, 14px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'clamp(8px, 2vw, 12px)', flexWrap: 'wrap' }}>
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <p style={{ font: 'clamp(12px, 3vw, 14px) 600 var(--font-body)', margin: '0 0 clamp(2px, 1vw, 4px)', color: 'var(--text)' }}>{item.emoji} {item.name}</p>
                           <p style={{ color: 'var(--muted)', font: 'clamp(11px, 2.5vw, 12px) var(--font-body)', margin: '0' }}>₹{item.price}</p>
                         </div>
                         {!cartItem ? (
@@ -387,7 +415,7 @@ export default function WaiterTablesPage() {
               </div>
 
               {cartItems.length > 0 && (
-                <div style={{ background: 'var(--card)', padding: 'clamp(16px, 4vw, 20px)', borderTop: '1px solid var(--border)', display: 'flex', gap: 'clamp(10px, 3vw, 12px)', flexDirection: 'column' }}>
+                <div style={{ background: 'var(--card)', padding: 'clamp(12px, 3vw, 18px)', borderTop: '1px solid var(--border)', display: 'flex', gap: 'clamp(8px, 2.5vw, 12px)', flexDirection: 'column' }}>
                   <button
                     onClick={() => { setCartItems([]); setShowMenuModal(false); }}
                     style={{
